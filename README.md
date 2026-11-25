@@ -53,7 +53,7 @@ The calendar calls eSpace's public event feed (`https://app.espace.cool/Public/G
 
 ## Accuracy check
 
-Every other Monday morning a GitHub Action (`.github/workflows/calendar-check.yml`) opens eSpace's own Agenda view and the live calendar, reads every event for the next 91 days from both, and compares date, start time, end time and title.
+Every Monday and Friday morning a GitHub Action (`.github/workflows/calendar-check.yml`) opens eSpace's own Agenda view and the live calendar, reads every event for the next 91 days from both, and compares date, start time, end time and title.
 
 - **If they match:** nothing happens (and any open check issue is closed).
 - **If anything differs, or the check can't run:** it opens an issue labeled `calendar-check` listing exactly what's different. Later runs comment on that same issue instead of opening new ones.
