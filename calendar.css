@@ -1,0 +1,70 @@
+/* Colors and type pulled from calvarychurch.org's theme */
+  .cvcal {
+    --cv-navy: var(--wp--preset--color--dark-blue, #103550);
+    --cv-green: var(--wp--preset--color--dark-green, #0B6D3A);
+    --cv-mint: var(--wp--preset--color--light-green, #D5ECDB);
+    --cv-sand: var(--wp--preset--color--gray, #9D9581);
+    --cv-text: var(--wp--preset--color--dark-gray, #333333);
+    --cv-line: rgba(157, 149, 129, .35);
+    --cv-label: area-normal, sans-serif;
+    --cv-serif: calluna, Georgia, serif;
+    font-family: source-sans-pro, sans-serif; color: var(--cv-text);
+  }
+  .cvcal * { box-sizing: border-box; }
+  .cvcal-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-bottom: 28px; }
+  .cvcal-nav { display: flex; gap: 8px; }
+
+  /* Buttons match the site's light-green block buttons */
+  .cvcal-btn { font-family: var(--cv-label); font-size: 12px; font-weight: 900; letter-spacing: 1.8px; text-transform: uppercase; line-height: 1;
+    padding: 0 22px; min-height: 44px; border: 2px solid var(--cv-mint); background: var(--cv-mint); color: var(--cv-navy); border-radius: 0; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+  .cvcal-btn:hover, .cvcal-btn:focus-visible { background: transparent; border-color: var(--cv-green); color: var(--cv-green); outline: none; }
+  .cvcal-icon { font-size: 22px; letter-spacing: 0; padding: 0 14px; font-weight: 400; }
+
+  .cvcal-range { flex: 1 1 auto; margin: 0 !important; font-family: var(--cv-serif) !important; font-weight: 400 !important; font-size: 34px !important; line-height: 1.15 !important; color: var(--cv-navy) !important; }
+  .cvcal-jump { display: flex; align-items: center; gap: 10px; font-family: var(--cv-label); font-size: 12px; font-weight: 900; letter-spacing: 1.8px; text-transform: uppercase; color: var(--cv-navy); }
+  .cvcal-date { font-family: source-sans-pro, sans-serif; font-size: 16px; padding: 0 12px; min-height: 44px; border: 2px solid var(--cv-line); border-radius: 0; background: transparent; color: var(--cv-text); }
+  .cvcal-date:focus { border-color: var(--cv-green); outline: none; }
+
+  .cvcal-body { min-height: 200px; }
+  .cvcal-msg { padding: 48px 0; text-align: center; color: var(--cv-sand); }
+  .cvcal-msg a { color: var(--cv-green); }
+  .cvcal-pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; }
+  .cvcal-table td, .cvcal-row, .cvcal-card-head { line-height: 1.4; }
+  .cvcal-foot { margin: 18px 0 0 !important; text-align: right; }
+  .cvcal-foot a { font-family: var(--cv-label); font-size: 12px; font-weight: 900; letter-spacing: 1.8px; text-transform: uppercase; color: var(--cv-green); text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 2px; }
+
+  /* Shared pieces */
+  .cvcal-daynum { display: block; font-family: var(--cv-serif); font-weight: 400; font-size: 46px; line-height: 1; color: var(--cv-navy); }
+  .cvcal-dayname { display: block; margin-top: 8px; font-family: var(--cv-label); font-size: 12px; font-weight: 900; letter-spacing: 1.8px; text-transform: uppercase; color: var(--cv-navy); }
+  .cvcal-daymonth { display: block; margin-top: 2px; font-size: 14px; color: var(--cv-sand); }
+  .cvcal-today .cvcal-daynum, .cvcal-today .cvcal-dayname { color: var(--cv-green); }
+  .cvcal-title { font-family: var(--cv-label); font-weight: 700; font-size: 17px; color: var(--cv-navy); }
+  .cvcal-time { color: var(--cv-text); font-variant-numeric: tabular-nums; }
+  .cvcal-label { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: var(--cv-mint); color: var(--cv-green); margin-right: 10px; vertical-align: middle; }
+  .cvcal-label svg { display: block; }
+  .cvcal-reg { display: inline-block; margin-top: 6px; font-family: var(--cv-label); font-size: 12px; font-weight: 900; letter-spacing: 1.8px; text-transform: uppercase; color: var(--cv-green); text-decoration: none; }
+
+  /* Desktop: agenda table */
+  .cvcal-table { width: 100%; border-collapse: collapse; background: transparent; border: 0; border-top: 2px solid var(--cv-navy); margin: 0 !important; }
+  .cvcal-table th { text-align: left; font-family: var(--cv-label); font-size: 12px; font-weight: 900; letter-spacing: 1.8px; text-transform: uppercase; color: var(--cv-navy); padding: 16px 20px; border: 0; border-bottom: 1px solid var(--cv-line); background: transparent; }
+  .cvcal-table td { padding: 16px 20px; border: 0; border-bottom: 1px solid var(--cv-line); vertical-align: top; font-size: 16px; background: transparent; }
+  .cvcal-table td.cvcal-day { width: 200px; padding-top: 20px; }
+  .cvcal-table td.cvcal-time { width: 180px; white-space: nowrap; }
+  .cvcal-table tr.cvcal-today td { background: rgba(213, 236, 219, .45); }
+
+  /* Mobile: day sections */
+  .cvcal-days { display: flex; flex-direction: column; gap: 28px; }
+  .cvcal-card { border-top: 2px solid var(--cv-navy); }
+  .cvcal-card-head { display: flex; align-items: baseline; gap: 12px; padding: 14px 0 10px; border-bottom: 1px solid var(--cv-line); }
+  .cvcal-card-head .cvcal-daynum { display: inline; font-size: 38px; }
+  .cvcal-card-head .cvcal-dayname { display: inline; margin: 0; }
+  .cvcal-card-head .cvcal-daymonth { display: inline; margin: 0; }
+  .cvcal-today.cvcal-card { border-top-color: var(--cv-green); }
+  .cvcal-today-tag { margin-left: auto; font-family: var(--cv-label); font-size: 10px; font-weight: 900; letter-spacing: 1.6px; text-transform: uppercase; background: var(--cv-green); color: #fff; padding: 4px 8px; align-self: center; }
+  .cvcal-row { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--cv-line); font-size: 16px; }
+  .cvcal-row .cvcal-time { font-size: 15px; padding-top: 1px; }
+  .cvcal.is-narrow .cvcal-jump span { display: none; }
+  .cvcal.is-narrow .cvcal-range { flex-basis: 100%; order: -1; font-size: 28px !important; }
+  .cvcal.is-narrow .cvcal-jump { flex: 1 1 100%; }
+  .cvcal.is-narrow .cvcal-date { flex: 1 1 auto; }
+  .cvcal.is-narrow .cvcal-pager .cvcal-btn { padding: 0 14px; letter-spacing: 1.2px; }
