@@ -1,0 +1,84 @@
+name: Calendar accuracy check
+
+# Every Monday and Friday, compare the next 91 days of the website calendar against eSpace.
+# If anything differs, open (or update) a GitHub issue with the details.
+
+on:
+  schedule:
+    - cron: "17 13 * * 1,5" # Mondays and Fridays 13:17 UTC (8:17 AM EST / 9:17 AM EDT)
+  workflow_dispatch:         # "Run workflow" button on the Actions tab
+  pull_request:
+    paths:
+      - "calendar.js"
+      - "calendar.css"
+      - "scripts/check-calendar.mjs"
+      - ".github/workflows/calendar-check.yml"
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: calendar-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1
+          npx playwright install --with-deps chromium
+
+      - name: Serve this branch's calendar for pull requests
+        if: github.event_name == 'pull_request'
+        run: |
+          nohup python3 -m http.server 8080 > /dev/null 2>&1 &
+          sleep 2
+          echo "SITE_URL=http://localhost:8080/" >> "$GITHUB_ENV"
+
+      - name: Compare eSpace with the website calendar
+        id: check
+        continue-on-error: true
+        run: node scripts/check-calendar.mjs
+
+      - name: Add the report to the run summary
+        if: always()
+        run: cat report.md >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Open or update an issue when something is wrong
+        if: steps.check.outcome == 'failure' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create calendar-check --color D1891D --description "Automated calendar accuracy check" 2>/dev/null || true
+          RUN_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          printf '%s\n\n[View this run](%s)\n' "$(cat report.md)" "$RUN_URL" > body.md
+          EXISTING=$(gh issue list --label calendar-check --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file body.md
+          else
+            gh issue create --title "Calendar check found differences ($(date -u +%Y-%m-%d))" --label calendar-check --body-file body.md
+          fi
+
+      - name: Close the open issue once everything matches again
+        if: steps.check.outcome == 'success' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          EXISTING=$(gh issue list --label calendar-check --state open --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "The latest check found no differences between eSpace and the website calendar."
+          fi
+
+      - name: Fail the run if the check failed
+        if: steps.check.outcome == 'failure'
+        run: exit 1

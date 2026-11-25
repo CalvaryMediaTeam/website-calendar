@@ -51,6 +51,20 @@ The calendar calls eSpace's public event feed (`https://app.espace.cool/Public/G
 - eSpace "calendar labels" (Communion, Cross Con and the like) show with a bell icon.
 - A **Register →** link appears for any event with registration open in eSpace.
 
+## Accuracy check
+
+Every Monday and Friday morning a GitHub Action (`.github/workflows/calendar-check.yml`) opens eSpace's own Agenda view and the live calendar, reads every event for the next 91 days from both, and compares date, start time, end time and title.
+
+- **If they match:** nothing happens (and any open check issue is closed).
+- **If anything differs, or the check can't run:** it opens an issue labeled `calendar-check` listing exactly what's different. Later runs comment on that same issue instead of opening new ones.
+- **To get the reports by email:** click **Watch** on the repository (or set a custom watch that includes Issues).
+- **To run it now:** Actions tab → **Calendar accuracy check** → **Run workflow**.
+- It also runs on any pull request that changes `calendar.js` or `calendar.css`, testing that branch's version before it's merged.
+
+GitHub pauses scheduled workflows in public repositories after 60 days without any repository activity and emails the repository admins first. If that happens, re-enable it from the Actions tab.
+
+The comparison script is `scripts/check-calendar.mjs`.
+
 ## Who can change this
 
 Anything merged to `main` runs on calvarychurch.org. Keep `main` protected so changes go through a reviewed pull request.
