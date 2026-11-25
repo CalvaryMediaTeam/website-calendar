@@ -105,7 +105,7 @@
       .then(function (j) {
         if (!j || !Array.isArray(j.Data)) throw new Error('Unexpected response');
         j.Data.forEach(function (e) {
-          if (e.IsCanceled) return;
+          if (e.IsCanceled || /Hymn Sing/.test(e.Title)) return; // TEMP: deliberate bug to test the check
           var s = parseMs(e.Start), en = parseMs(e.End);
           if (isNaN(s)) return;
           var id = (e.OccurrenceId || 'e' + e.EventId) + '-' + s;
