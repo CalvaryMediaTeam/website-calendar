@@ -1,5 +1,5 @@
 /*!
- * Calvary Church events calendar
+ * Calvary Church events calendar  v1.0.0
  * Pulls live events from eSpace and renders an agenda (desktop) or day cards (phones).
  * Source: https://github.com/CalvaryMediaTeam/website-calendar
  *
